@@ -1,8 +1,8 @@
 /*
  * File:   main.c
  * Author: Mark
- * Description: Lab3 Seatwork - Detecting button presses in a column
- * Created on February 27, 2017, 4:03 AM
+ * Description: Lab3 Seatwork - Detecting button presses in a row
+ * Created on February 27, 2017, 12:40 PM
  */
 
 
@@ -15,23 +15,19 @@ _CONFIG3 (SOSCSEL_IO)
 
 void __attribute__((interrupt)) _CNInterrupt(void);
 
+void led_toggle(void);
 void led1_toggle(void);
 void led2_toggle(void);
 void led3_toggle(void);
-void led4_toggle(void);
 
 int row1_press;
-int row2_press;
-int row3_press;
-int row4_press;
 
 int main(void) {
     /* Configure ports
      * RA0 - row 1 (input)
-     * RA1 - row 2 (input)
-     * RA2 - row 3 (input)
-     * RA3 - row 4 (input)
      * RB0 - col 1 (output)
+     * RB1 - col 2 (output)
+     * RB2 - col 3 (output)
      * RB4 - led 1 (output)
      * RB5 - led 2 (output)
      * RB7 - led 3 (output)
@@ -39,27 +35,19 @@ int main(void) {
      */
     
     AD1PCFG = 0xffff;
-    TRISA = 0x000f;
-    TRISB = 0xfe4e;
+    TRISA = 0x0001;
+    TRISB = 0xfe48;
     LATB = 0xffff;
     
     /* Enable internal pullups
      * RA0 - CN2 (CNPU1)
-     * RA1 - CN3 (CNPU1)
-     * RA2 - bit 14 (CNPU2)
-     * RA3 - bit 13 (CNPU2)
      */
-    CNPU1 = CNPU1 | 0x000c;
-    CNPU2 = CNPU2 | 0x6000;
+    CNPU1 = CNPU1 | 0x0002;
     
     /* Enable interrupts and clear IRQ flag
      * RA0 - CN2 (CNEN1)
-     * RA1 - CN3 (CNEN1)
-     * RA2 - bit 14 (CNEN2)
-     * RA3 - bit 13 (CNEN2)
      */
-    CNEN1 = CNEN1 | 0x000c;
-    CNEN2 = CNEN2 | 0x6000;
+    CNEN1 = CNEN1 | 0x0002;
     IEC1bits.CNIE = 1;
     IFS1bits.CNIF = 0;
     
@@ -72,19 +60,12 @@ int main(void) {
      */
     
     LATBbits.LATB0 = 0;
+    LATBbits.LATB1 = 0;
+    LATBbits.LATB2 = 0;
     while (1) {
         if (row1_press) {
-            led1_toggle();
+            led_toggle();
             row1_press = 0; // clear flag
-        } else if (row2_press) {
-            led2_toggle();
-            row2_press = 0;
-        } else if (row3_press) {
-            led3_toggle();
-            row3_press = 0;
-        } else if (row4_press) {
-            led4_toggle();
-            row4_press;
         }
     }
     
@@ -103,36 +84,35 @@ void __attribute__((interrupt)) _CNInterrupt(void) {
             row1_press = 1; // set flag
         else
             row1_press = 0;
-    } else if (!PORTAbits.RA1) {
-        while ((!PORTAbits.RA1) && (deb_ctr < DEB_MAX)) {
-            deb_ctr++;
-        }
-        if (deb_ctr == DEB_MAX)
-            row2_press = 1;
-        else
-            row2_press = 0;
-    } else if (!PORTAbits.RA2) {
-        while ((!PORTAbits.RA2) && (deb_ctr < DEB_MAX)) {
-            deb_ctr++;
-        }
-        if (deb_ctr == DEB_MAX)
-            row3_press = 1;
-        else
-            row3_press = 0;
-    } else if (!PORTAbits.RA3) {
-        while ((!PORTAbits.RA3) && (deb_ctr < DEB_MAX)) {
-            deb_ctr++;
-        }
-        if (deb_ctr == DEB_MAX)
-            row4_press = 1;
-        else
-            row4_press = 0;
     }
     
     /* Clear IRQ flag */
     IFS1bits.CNIF = 0;
 }
     
+void led_toggle(void) {
+    int i = 0;
+    while (i < 3) {
+        switch(i) {
+            case 0:
+                LATB = 0xfffe;  // col1 is pulled down, others pulled up
+                if (!PORTAbits.RA0) {
+                    led1_toggle();
+                }
+            case 1:
+                LATB = 0xfffd;  // col2 is pulled down, others pulled up
+                if (!PORTAbits.RA0) {
+                    led2_toggle();
+                }
+            case 2:
+                LATB = 0xfffb;  // col3 is pulled down, others pulled up
+                if (!PORTAbits.RA0) {
+                    led3_toggle();
+                }
+        }
+    }
+}
+
 void led1_toggle(void) {
     LATBbits.LATB4 = ~LATBbits.LATB4;
 }
@@ -143,8 +123,4 @@ void led2_toggle(void) {
 
 void led3_toggle(void) {
     LATBbits.LATB7 = ~LATBbits.LATB7;
-}
-
-void led4_toggle(void) {
-    LATBbits.LATB8 = ~LATBbits.LATB8;
 }
