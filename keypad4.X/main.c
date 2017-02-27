@@ -1,7 +1,7 @@
 /*
  * File:   main.c
  * Author: Mark
- * Description: Lab3 Seatwork - Detecting button presses in a row
+ * Description: Lab3 Quiz - Detecting button presses in a row
  * Created on February 27, 2017, 12:40 PM
  */
 
