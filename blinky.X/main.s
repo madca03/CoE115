@@ -1,6 +1,9 @@
 .include "p24fj64gb002.inc"
 .global __reset
     
+config __CONFIG1, FWDTEN_OFF & JTAGEN_OFF & ICS_PGx2
+config __CONFIG2, POSCMOD_NONE & OSCIOFNC_OFF & FCKSM_CSDCMD & FNOSC_FRCPLL & PLL96MHZ_OFF & PLLDIV_NODIV
+
 .bss
 i: .space 2
 j: .space 2

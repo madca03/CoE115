@@ -58,10 +58,10 @@ Program Memory  [Origin = 0x200, Length = 0xa9f8]
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200                0xce           0x135  (309)
-.text                        0x2ce                0x96            0xe1  (225)
-.dinit                       0x364                 0x8             0xc  (12)
+.text                        0x2ce                0x92            0xdb  (219)
+.dinit                       0x360                 0x8             0xc  (12)
 
-                 Total program memory used (bytes):          0x222  (546) <1%
+                 Total program memory used (bytes):          0x21c  (540) <1%
 
 
 Ivt Memory  [Origin = 0x4, Length = 0xfc]
@@ -106,18 +106,18 @@ External Symbols in Program Memory (by address):
                   0x000252                  __data_init_standard
                   0x0002c8                  __DefaultInterrupt
                   0x0002ce                  _main
-                  0x000306                  __CNInterrupt
-                  0x000346                  _led1_toggle
+                  0x000302                  __CNInterrupt
+                  0x000342                  _led1_toggle
 
 External Symbols in Program Memory (by name):
 
-                  0x000306                  __CNInterrupt
+                  0x000302                  __CNInterrupt
                   0x0002c8                  __DefaultInterrupt
                   0x000252                  __data_init
                   0x000252                  __data_init_standard
                   0x00023c                  __psv_init
                   0x000200                  __resetPRI
-                  0x000346                  _led1_toggle
+                  0x000342                  _led1_toggle
                   0x0002ce                  _main
 
 Memory Configuration
@@ -203,9 +203,9 @@ __CONFIG1         0x00abfe          0x2
 .comment
  *(.comment)
 
-.debug_info       0x000000        0x6ad
+.debug_info       0x000000        0x6b9
  *(.debug_info)
- .debug_info      0x000000        0x6ad build/default/production/main.o
+ .debug_info      0x000000        0x6b9 build/default/production/main.o
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev     0x000000        0x133
@@ -1094,11 +1094,11 @@ __c30_signature
  .ivt._CNInterrupt
                   0x00003a          0x2 build/default/production/main.o
 
-.text             0x0002ce         0x96
- .text            0x0002ce         0x96 build/default/production/main.o
+.text             0x0002ce         0x92
+ .text            0x0002ce         0x92 build/default/production/main.o
                   0x0002ce                  _main
-                  0x000306                  __CNInterrupt
-                  0x000346                  _led1_toggle
+                  0x000302                  __CNInterrupt
+                  0x000342                  _led1_toggle
 
-.dinit            0x000364          0x8
- .dinit           0x000364          0x8 data_init
+.dinit            0x000360          0x8
+ .dinit           0x000360          0x8 data_init

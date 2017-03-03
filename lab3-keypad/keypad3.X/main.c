@@ -84,7 +84,7 @@ int main(void) {
             row3_press = 0;
         } else if (row4_press) {
             led4_toggle();
-            row4_press;
+            row4_press = 0;
         }
     }
     

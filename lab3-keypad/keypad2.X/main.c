@@ -2,7 +2,6 @@
  * File:   main.c
  * Author: Mark
  * Description: Lab3 Seatwork - Using Interrupts to read a single button
- *                            - Detecting button presses in a row
  * Created on February 27, 2017, 4:03 AM
  */
 
@@ -29,7 +28,7 @@ int main(void) {
     
     AD1PCFG = 0xffff;
     TRISA = 0x0001;
-    TRISB = 0xffe8;
+    TRISB = 0xffee;
     LATB = 0xffff;
     
     /* Enable internal pullups
@@ -54,9 +53,7 @@ int main(void) {
      * When col2 and col3 are pulled down -> all keys in a row toggle the led
      */
     
-    LATBbits.LATB0 = 1;
-    LATBbits.LATB1 = 0;
-    LATBbits.LATB2 = 0;
+    LATBbits.LATB0 = 0;
     while (1) {
         if (row1_press) {
             led1_toggle();

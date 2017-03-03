@@ -15,12 +15,14 @@ _CONFIG3 (SOSCSEL_IO)
 
 void __attribute__((interrupt)) _CNInterrupt(void);
 
-void led_toggle(void);
 void led1_toggle(void);
 void led2_toggle(void);
 void led3_toggle(void);
 
 int row1_press;
+int col1_press;
+int col2_press;
+int col3_press;
 
 int main(void) {
     /* Configure ports
@@ -42,12 +44,12 @@ int main(void) {
     /* Enable internal pullups
      * RA0 - CN2 (CNPU1)
      */
-    CNPU1 = CNPU1 | 0x0002;
+    CNPU1 = CNPU1 | 0x0004;
     
     /* Enable interrupts and clear IRQ flag
      * RA0 - CN2 (CNEN1)
      */
-    CNEN1 = CNEN1 | 0x0002;
+    CNEN1 = CNEN1 | 0x0004;
     IEC1bits.CNIE = 1;
     IFS1bits.CNIF = 0;
     
@@ -63,9 +65,15 @@ int main(void) {
     LATBbits.LATB1 = 0;
     LATBbits.LATB2 = 0;
     while (1) {
-        if (row1_press) {
-            led_toggle();
-            row1_press = 0; // clear flag
+        if (col1_press) {
+            led1_toggle();
+            col1_press = 0;
+        } else if (col2_press) {
+            led2_toggle();
+            col2_press = 0;
+        } else if (col3_press) {
+            led3_toggle();
+            col3_press = 0;
         }
     }
     
@@ -74,45 +82,68 @@ int main(void) {
 
 void __attribute__((interrupt)) _CNInterrupt(void) {
     int deb_ctr = 0;    // debounce counter
+    int i = 0;
     
     if (!PORTAbits.RA0) {
-        /* Software debounce */
-        while ((!PORTAbits.RA0) && (deb_ctr < DEB_MAX)) {
-            deb_ctr++;
+        for (i = 0; i < 3; i++) {
+            if (i == 0) {
+                LATBbits.LATB0 = 0;
+                LATBbits.LATB1 = 1;
+                LATBbits.LATB2 = 1;
+                
+                while ((!PORTAbits.RA0) && (deb_ctr < DEB_MAX)) {
+                    deb_ctr++;
+                }
+                if (deb_ctr == DEB_MAX) {
+                    col1_press = 1;
+                    LATBbits.LATB1 = 0;
+                    LATBbits.LATB2 = 0;
+                    break;
+                } else {
+                    col1_press = 0;
+                }
+            }
+            else if (i == 1) {
+                LATBbits.LATB0 = 1;
+                LATBbits.LATB1 = 0;
+                LATBbits.LATB2 = 1;
+                
+                while ((!PORTAbits.RA0) && (deb_ctr < DEB_MAX)) {
+                    deb_ctr++;
+                }
+                if (deb_ctr == DEB_MAX) {
+                    col2_press = 1;
+                    LATBbits.LATB0 = 0;
+                    LATBbits.LATB2 = 0;
+                    break;
+                } else {
+                    col2_press = 0;
+                }
+            }
+            else if (i == 2) {
+                LATBbits.LATB0 = 1;
+                LATBbits.LATB1 = 1;
+                LATBbits.LATB2 = 0;
+                
+                while ((!PORTAbits.RA0) && (deb_ctr < DEB_MAX)) {
+                    deb_ctr++;
+                }
+                if (deb_ctr == DEB_MAX) {
+                    col3_press = 1;
+                    LATBbits.LATB0 = 0;
+                    LATBbits.LATB1 = 0;
+                    break;
+                } else {
+                    col3_press = 0;
+                }
+            }
         }
-        if (deb_ctr == DEB_MAX)
-            row1_press = 1; // set flag
-        else
-            row1_press = 0;
     }
     
     /* Clear IRQ flag */
     IFS1bits.CNIF = 0;
 }
     
-void led_toggle(void) {
-    int i = 0;
-    while (i < 3) {
-        switch(i) {
-            case 0:
-                LATB = 0xfffe;  // col1 is pulled down, others pulled up
-                if (!PORTAbits.RA0) {
-                    led1_toggle();
-                }
-            case 1:
-                LATB = 0xfffd;  // col2 is pulled down, others pulled up
-                if (!PORTAbits.RA0) {
-                    led2_toggle();
-                }
-            case 2:
-                LATB = 0xfffb;  // col3 is pulled down, others pulled up
-                if (!PORTAbits.RA0) {
-                    led3_toggle();
-                }
-        }
-    }
-}
-
 void led1_toggle(void) {
     LATBbits.LATB4 = ~LATBbits.LATB4;
 }

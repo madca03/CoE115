@@ -58,10 +58,10 @@ Program Memory  [Origin = 0x200, Length = 0xa9f8]
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200                0xce           0x135  (309)
-.text                        0x2ce               0x19c           0x26a  (618)
-.dinit                       0x46a                 0x8             0xc  (12)
+.text                        0x2ce               0x19e           0x26d  (621)
+.dinit                       0x46c                 0x8             0xc  (12)
 
-                 Total program memory used (bytes):          0x3ab  (939) 1%
+                 Total program memory used (bytes):          0x3ae  (942) 1%
 
 
 Ivt Memory  [Origin = 0x4, Length = 0xfc]
@@ -112,24 +112,24 @@ External Symbols in Program Memory (by address):
                   0x000252                  __data_init
                   0x0002c8                  __DefaultInterrupt
                   0x0002ce                  _main
-                  0x000334                  __CNInterrupt
-                  0x0003f2                  _led1_toggle
-                  0x000410                  _led2_toggle
-                  0x00042e                  _led3_toggle
-                  0x00044c                  _led4_toggle
+                  0x000336                  __CNInterrupt
+                  0x0003f4                  _led1_toggle
+                  0x000412                  _led2_toggle
+                  0x000430                  _led3_toggle
+                  0x00044e                  _led4_toggle
 
 External Symbols in Program Memory (by name):
 
-                  0x000334                  __CNInterrupt
+                  0x000336                  __CNInterrupt
                   0x0002c8                  __DefaultInterrupt
                   0x000252                  __data_init
                   0x000252                  __data_init_standard
                   0x00023c                  __psv_init
                   0x000200                  __resetPRI
-                  0x0003f2                  _led1_toggle
-                  0x000410                  _led2_toggle
-                  0x00042e                  _led3_toggle
-                  0x00044c                  _led4_toggle
+                  0x0003f4                  _led1_toggle
+                  0x000412                  _led2_toggle
+                  0x000430                  _led3_toggle
+                  0x00044e                  _led4_toggle
                   0x0002ce                  _main
 
 Memory Configuration
@@ -215,18 +215,18 @@ __CONFIG1         0x00abfe          0x2
 .comment
  *(.comment)
 
-.debug_info       0x000000        0x797
+.debug_info       0x000000        0x7a3
  *(.debug_info)
- .debug_info      0x000000        0x797 build/default/production/main.o
+ .debug_info      0x000000        0x7a3 build/default/production/main.o
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev     0x000000        0x133
  *(.debug_abbrev)
  .debug_abbrev    0x000000        0x133 build/default/production/main.o
 
-.debug_line       0x000000         0xea
+.debug_line       0x000000         0xeb
  *(.debug_line)
- .debug_line      0x000000         0xea build/default/production/main.o
+ .debug_line      0x000000         0xeb build/default/production/main.o
 
 .debug_frame      0x000000         0xca
  *(.debug_frame)
@@ -1109,14 +1109,14 @@ __c30_signature
  .ivt._CNInterrupt
                   0x00003a          0x2 build/default/production/main.o
 
-.text             0x0002ce        0x19c
- .text            0x0002ce        0x19c build/default/production/main.o
+.text             0x0002ce        0x19e
+ .text            0x0002ce        0x19e build/default/production/main.o
                   0x0002ce                  _main
-                  0x000334                  __CNInterrupt
-                  0x0003f2                  _led1_toggle
-                  0x000410                  _led2_toggle
-                  0x00042e                  _led3_toggle
-                  0x00044c                  _led4_toggle
+                  0x000336                  __CNInterrupt
+                  0x0003f4                  _led1_toggle
+                  0x000412                  _led2_toggle
+                  0x000430                  _led3_toggle
+                  0x00044e                  _led4_toggle
 
-.dinit            0x00046a          0x8
- .dinit           0x00046a          0x8 data_init
+.dinit            0x00046c          0x8
+ .dinit           0x00046c          0x8 data_init

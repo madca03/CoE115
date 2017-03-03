@@ -170,18 +170,20 @@ __CONFIG4
 __CONFIG3
  *(__CONFIG3.sec*)
 
-__CONFIG2
+__CONFIG2         0x00abfc          0x2
  *(__CONFIG2.sec*)
+ __CONFIG2.sec    0x00abfc          0x2 build/default/production/main.o
 
-__CONFIG1
+__CONFIG1         0x00abfe          0x2
  *(__CONFIG1.sec*)
+ __CONFIG1.sec    0x00abfe          0x2 build/default/production/main.o
 
 .comment
  *(.comment)
 
-.debug_info       0x000000         0x73
+.debug_info       0x000000         0x7d
  *(.debug_info)
- .debug_info      0x000000         0x73 build/default/production/main.o
+ .debug_info      0x000000         0x7d build/default/production/main.o
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev     0x000000         0x14

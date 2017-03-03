@@ -8,7 +8,7 @@
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
                    projectFiles="true">
-      <itemPath>../../../../../Program Files (x86)/Microchip/xc16/v1.30/support/PIC24F/gld/p24FJ64GB002.gld</itemPath>
+      <itemPath>../../../../../../Program Files (x86)/Microchip/xc16/v1.30/support/PIC24F/gld/p24FJ64GB002.gld</itemPath>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
@@ -23,6 +23,7 @@
   </logicalFolder>
   <sourceRootList>
     <Elem>../../../../../Program Files (x86)/Microchip/xc16/v1.30/support/PIC24F/gld</Elem>
+    <Elem>../../../../../../Program Files (x86)/Microchip/xc16/v1.30/support/PIC24F/gld</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -32,7 +33,7 @@
         <targetDevice>PIC24FJ64GB002</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>PICkit3PlatformTool</platformTool>
+        <platformTool>Simulator</platformTool>
         <languageToolchain>XC16</languageToolchain>
         <languageToolchainVersion>1.30</languageToolchainVersion>
         <platform>3</platform>
