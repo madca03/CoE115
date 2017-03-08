@@ -59,10 +59,10 @@ Program Memory  [Origin = 0x200, Length = 0xa9f8]
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200                0xbe           0x11d  (285)
-.text                        0x2be               0x198           0x264  (612)
-.dinit                       0x456                 0x8             0xc  (12)
+.text                        0x2be               0x29c           0x3ea  (1002)
+.dinit                       0x55a                 0x8             0xc  (12)
 
-                 Total program memory used (bytes):          0x38d  (909) 1%
+                 Total program memory used (bytes):          0x513  (1299) 1%
 
 
 Ivt Memory  [Origin = 0x4, Length = 0xfc]
@@ -192,9 +192,9 @@ __CONFIG1         0x00abfe          0x2
  *(.debug_abbrev)
  .debug_abbrev    0x000000         0x14 build/default/production/main.o
 
-.debug_line       0x000000         0xc8
+.debug_line       0x000000        0x11d
  *(.debug_line)
- .debug_line      0x000000         0xc8 build/default/production/main.o
+ .debug_line      0x000000        0x11d build/default/production/main.o
 
 .debug_frame
  *(.debug_frame)
@@ -1598,9 +1598,9 @@ __c30_signature
 .bss                0x0800          0x4
  .bss               0x0800          0x4 build/default/production/main.o
 
-.text             0x0002be        0x198
- .text            0x0002be        0x198 build/default/production/main.o
+.text             0x0002be        0x29c
+ .text            0x0002be        0x29c build/default/production/main.o
                   0x0002be                  __reset
 
-.dinit            0x000456          0x8
- .dinit           0x000456          0x8 data_init
+.dinit            0x00055a          0x8
+ .dinit           0x00055a          0x8 data_init

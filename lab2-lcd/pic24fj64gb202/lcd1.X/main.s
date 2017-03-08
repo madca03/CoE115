@@ -2,8 +2,9 @@
 .global __reset
 
 config __CONFIG1, FWDTEN_OFF & JTAGEN_OFF & ICS_PGx1
-config __CONFIG2, POSCMD_NONE & OSCIOFCN_OFF & FCKSM_CSDCMD & FNOSC_FRCPLL & PLLDIV_NODIV
+config __CONFIG2, POSCMD_NONE & OSCIOFCN_ON & FCKSM_CSDCMD & FNOSC_FRCPLL & PLLDIV_NODIV
 config __CONFIG3, SOSCSEL_OFF
+;config __CONFIG4, PLLDIV_NODIV
 
 .bss
     i: .space 2
@@ -13,10 +14,16 @@ config __CONFIG3, SOSCSEL_OFF
 __reset:
     mov #__SP_init, W15
     mov #__SPLIM_init, W0
-    mov W0,SPLIM
+    mov W0, SPLIM
 
     clr i
     clr j
+    clr W10
+
+    mov #0xFFFE, W0
+    mov W0, TRISA
+    mov #0x0001, W0
+    mov W0, ANSA
 
     mov #0x90FF, W0 ; RB[11:8] - data line, RB[13] - reg select, RB[14] - enable
     mov W0, TRISB
@@ -58,6 +65,33 @@ __reset:
     call send8ToLCD
     call delay100us
 
+    ; Initialization Complete
+
+main:
+    call write_name
+
+waitdown:
+    btsc PORTA, #4
+    goto waitdown
+    call clear_display
+    call write_name_reverse
+    bset LATA, #0
+
+waitup:
+    btss PORTA, #4
+    goto waitup
+    call clear_display
+    call write_name
+    bclr LATA, #0
+    goto waitdown
+
+clear_display:
+    mov #0x01, W0   ; Clear display
+    call send8ToLCD
+    call delay15ms
+    return
+
+write_name:
     mov #0x80, W0   ; Set address
     call send8ToLCD
     call delay100us
@@ -130,9 +164,82 @@ __reset:
     call send8ToLCD
     call delay100us
 
-loop:
-    call loop
-    ; call end
+    return
+
+write_name_reverse:
+    mov #0x80, W0
+    call send8ToLCD
+    call delay100us
+
+    mov #0x141, W0
+    call send8ToLCD
+    call delay100us
+
+    mov #0x147, W0
+    call send8ToLCD
+    call delay100us
+
+    mov #0x141, W0
+    call send8ToLCD
+    call delay100us
+
+    mov #0x154, W0
+    call send8ToLCD
+    call delay100us
+
+    mov #0x14F, W0
+    call send8ToLCD
+    call delay100us
+
+    mov #0x14E, W0
+    call send8ToLCD
+    call delay100us
+
+    mov #0xC0, W0   ; Set address
+    call send8ToLCD
+    call delay100us
+
+    mov #0x014D, W0  ; send "M"
+    call send8ToLCD
+    call delay100us
+
+    mov #0x141, W0
+    call send8ToLCD
+    call delay100us
+
+    mov #0x152, W0
+    call send8ToLCD
+    call delay100us
+
+    mov #0x14B, W0
+    call send8ToLCD
+    call delay100us
+
+    mov #0x120, W0
+    call send8ToLCD
+    call delay100us
+
+    mov #0x141, W0
+    call send8ToLCD
+    call delay100us
+
+    mov #0x14C, W0
+    call send8ToLCD
+    call delay100us
+
+    mov #0x14C, W0
+    call send8ToLCD
+    call delay100us
+
+    mov #0x145, W0
+    call send8ToLCD
+    call delay100us
+
+    mov #0x14E, W0
+    call send8ToLCD
+    call delay100us
+
+    return
 
 delay15ms:
     ; instruction cycle freq = 2Mhz
@@ -189,6 +296,19 @@ loop1s:
     bra nz, loop1s
     dec i
     bra nz, loop1s
+    return
+
+delaybtn:
+    mov #0x000b, W0
+    mov W0, i
+    mov #0x2C23, W0
+    mov W0, j
+
+loopbtn:
+    dec j
+    bra nz, loopbtn
+    dec i
+    bra nz, loopbtn
     return
 
 send4ToLCD:

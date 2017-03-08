@@ -59,10 +59,10 @@ Program Memory  [Origin = 0x200, Length = 0xa9f8]
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200                0xbe           0x11d  (285)
-.text                        0x2be                0x30            0x48  (72)
-.dinit                       0x2ee                 0x8             0xc  (12)
+.text                        0x2be                0x36            0x51  (81)
+.dinit                       0x2f4                 0x8             0xc  (12)
 
-                 Total program memory used (bytes):          0x171  (369) <1%
+                 Total program memory used (bytes):          0x17a  (378) <1%
 
 
 Ivt Memory  [Origin = 0x4, Length = 0xfc]
@@ -165,17 +165,21 @@ LOAD c:/program files (x86)/microchip/xc16/v1.30/bin/bin/../../lib\libfx-elf.a
 usercode
  *(usercode)
 
-__CONFIG4
+__CONFIG4         0x00abf8          0x2
  *(__CONFIG4.sec*)
+ __CONFIG4.sec    0x00abf8          0x2 build/default/production/main.o
 
-__CONFIG3
+__CONFIG3         0x00abfa          0x2
  *(__CONFIG3.sec*)
+ __CONFIG3.sec    0x00abfa          0x2 build/default/production/main.o
 
-__CONFIG2
+__CONFIG2         0x00abfc          0x2
  *(__CONFIG2.sec*)
+ __CONFIG2.sec    0x00abfc          0x2 build/default/production/main.o
 
-__CONFIG1
+__CONFIG1         0x00abfe          0x2
  *(__CONFIG1.sec*)
+ __CONFIG1.sec    0x00abfe          0x2 build/default/production/main.o
 
 .comment
  *(.comment)
@@ -189,9 +193,9 @@ __CONFIG1
  *(.debug_abbrev)
  .debug_abbrev    0x000000         0x14 build/default/production/main.o
 
-.debug_line       0x000000         0x48
+.debug_line       0x000000         0x4b
  *(.debug_line)
- .debug_line      0x000000         0x48 build/default/production/main.o
+ .debug_line      0x000000         0x4b build/default/production/main.o
 
 .debug_frame
  *(.debug_frame)
@@ -1595,9 +1599,9 @@ __c30_signature
 .bss                0x0800          0x4
  .bss               0x0800          0x4 build/default/production/main.o
 
-.text             0x0002be         0x30
- .text            0x0002be         0x30 build/default/production/main.o
+.text             0x0002be         0x36
+ .text            0x0002be         0x36 build/default/production/main.o
                   0x0002be                  __reset
 
-.dinit            0x0002ee          0x8
- .dinit           0x0002ee          0x8 data_init
+.dinit            0x0002f4          0x8
+ .dinit           0x0002f4          0x8 data_init
