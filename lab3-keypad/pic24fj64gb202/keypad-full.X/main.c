@@ -11,7 +11,7 @@ _CONFIG1 (FWDTEN_OFF & JTAGEN_OFF)
 _CONFIG2 (POSCMD_NONE & OSCIOFCN_ON & FCKSM_CSDCMD & FNOSC_FRCPLL & PLLDIV_NODIV)
 _CONFIG3 (SOSCSEL_OFF)
 
-#define DEB_MAX 10
+#define DEB_MAX 500
 
 void __attribute__((interrupt)) _CNInterrupt(void);
 
@@ -179,7 +179,6 @@ void __attribute__((interrupt)) _CNInterrupt(void) {
     if (!PORTAbits.RA0) {
         for (i = 0; i < 3; i++) {
             if (i == 0) {
-                LATBbits.LATB0 = 0;
                 LATBbits.LATB1 = 1;
                 LATBbits.LATB2 = 1;
                 
@@ -193,11 +192,12 @@ void __attribute__((interrupt)) _CNInterrupt(void) {
                     break;
                 } else {
                     one_press = 0;
+                    LATBbits.LATB1 = 0;
+                    LATBbits.LATB2 = 0;
                 }
             }
             else if (i == 1) {
                 LATBbits.LATB0 = 1;
-                LATBbits.LATB1 = 0;
                 LATBbits.LATB2 = 1;
                 
                 while ((!PORTAbits.RA0) && (deb_ctr < DEB_MAX)) {
@@ -210,12 +210,13 @@ void __attribute__((interrupt)) _CNInterrupt(void) {
                     break;
                 } else {
                     two_press = 0;
+                    LATBbits.LATB0 = 0;
+                    LATBbits.LATB2 = 0;
                 }
             }
             else if (i == 2) {
                 LATBbits.LATB0 = 1;
                 LATBbits.LATB1 = 1;
-                LATBbits.LATB2 = 0;
                 
                 while ((!PORTAbits.RA0) && (deb_ctr < DEB_MAX)) {
                     deb_ctr++;
@@ -227,13 +228,14 @@ void __attribute__((interrupt)) _CNInterrupt(void) {
                     break;
                 } else {
                     three_press = 0;
+                    LATBbits.LATB0 = 0;
+                    LATBbits.LATB1 = 0;
                 }
             }
         }
     } else if (!PORTAbits.RA1) {
         for (i = 0; i < 3; i++) {
             if (i == 0) {
-                LATBbits.LATB0 = 0;
                 LATBbits.LATB1 = 1;
                 LATBbits.LATB2 = 1;
                 
@@ -247,11 +249,12 @@ void __attribute__((interrupt)) _CNInterrupt(void) {
                     break;
                 } else {
                     four_press = 0;
+                    LATBbits.LATB1 = 0;
+                    LATBbits.LATB2 = 0;
                 }
             }
             else if (i == 1) {
                 LATBbits.LATB0 = 1;
-                LATBbits.LATB1 = 0;
                 LATBbits.LATB2 = 1;
                 
                 while ((!PORTAbits.RA1) && (deb_ctr < DEB_MAX)) {
@@ -264,12 +267,13 @@ void __attribute__((interrupt)) _CNInterrupt(void) {
                     break;
                 } else {
                     five_press = 0;
+                    LATBbits.LATB0 = 0;
+                    LATBbits.LATB2 = 0;
                 }
             }
             else if (i == 2) {
                 LATBbits.LATB0 = 1;
                 LATBbits.LATB1 = 1;
-                LATBbits.LATB2 = 0;
                 
                 while ((!PORTAbits.RA1) && (deb_ctr < DEB_MAX)) {
                     deb_ctr++;
@@ -281,13 +285,14 @@ void __attribute__((interrupt)) _CNInterrupt(void) {
                     break;
                 } else {
                     six_press = 0;
+                    LATBbits.LATB0 = 0;
+                    LATBbits.LATB1 = 0;
                 }
             }
         }
     } else if (!PORTAbits.RA2) {
         for (i = 0; i < 3; i++) {
             if (i == 0) {
-                LATBbits.LATB0 = 0;
                 LATBbits.LATB1 = 1;
                 LATBbits.LATB2 = 1;
                 
@@ -301,11 +306,12 @@ void __attribute__((interrupt)) _CNInterrupt(void) {
                     break;
                 } else {
                     seven_press = 0;
+                    LATBbits.LATB1 = 0;
+                    LATBbits.LATB2 = 0;
                 }
             }
             else if (i == 1) {
                 LATBbits.LATB0 = 1;
-                LATBbits.LATB1 = 0;
                 LATBbits.LATB2 = 1;
                 
                 while ((!PORTAbits.RA2) && (deb_ctr < DEB_MAX)) {
@@ -318,12 +324,13 @@ void __attribute__((interrupt)) _CNInterrupt(void) {
                     break;
                 } else {
                     eight_press = 0;
+                    LATBbits.LATB0 = 0;
+                    LATBbits.LATB2 = 0;
                 }
             }
             else if (i == 2) {
                 LATBbits.LATB0 = 1;
                 LATBbits.LATB1 = 1;
-                LATBbits.LATB2 = 0;
                 
                 while ((!PORTAbits.RA2) && (deb_ctr < DEB_MAX)) {
                     deb_ctr++;
@@ -335,13 +342,14 @@ void __attribute__((interrupt)) _CNInterrupt(void) {
                     break;
                 } else {
                     nine_press = 0;
+                    LATBbits.LATB0 = 0;
+                    LATBbits.LATB1 = 0;
                 }
             }
         }
     } else if (!PORTAbits.RA3) {
         for (i = 0; i < 3; i++) {
             if (i == 0) {
-                LATBbits.LATB0 = 0;
                 LATBbits.LATB1 = 1;
                 LATBbits.LATB2 = 1;
                 
@@ -355,11 +363,12 @@ void __attribute__((interrupt)) _CNInterrupt(void) {
                     break;
                 } else {
                     star_press = 0;
+                    LATBbits.LATB1 = 0;
+                    LATBbits.LATB2 = 0;
                 }
             }
             else if (i == 1) {
                 LATBbits.LATB0 = 1;
-                LATBbits.LATB1 = 0;
                 LATBbits.LATB2 = 1;
                 
                 while ((!PORTAbits.RA3) && (deb_ctr < DEB_MAX)) {
@@ -372,12 +381,13 @@ void __attribute__((interrupt)) _CNInterrupt(void) {
                     break;
                 } else {
                     zero_press = 0;
+                    LATBbits.LATB0 = 0;
+                    LATBbits.LATB2 = 0;
                 }
             }
             else if (i == 2) {
                 LATBbits.LATB0 = 1;
                 LATBbits.LATB1 = 1;
-                LATBbits.LATB2 = 0;
                 
                 while ((!PORTAbits.RA3) && (deb_ctr < DEB_MAX)) {
                     deb_ctr++;
@@ -389,6 +399,8 @@ void __attribute__((interrupt)) _CNInterrupt(void) {
                     break;
                 } else {
                     hash_press = 0;
+                    LATBbits.LATB0 = 0;
+                    LATBbits.LATB1 = 0;
                 }
             }
         }

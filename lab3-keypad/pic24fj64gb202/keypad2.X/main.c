@@ -11,7 +11,7 @@ _CONFIG1 (FWDTEN_OFF & JTAGEN_OFF & ICS_PGx2)
 _CONFIG2 (POSCMD_NONE & OSCIOFCN_ON & FCKSM_CSDCMD & FNOSC_FRCPLL & PLLDIV_NODIV)
 _CONFIG3 (SOSCSEL_OFF)
 
-#define DEB_MAX 10
+#define DEB_MAX 2500
 
 void __attribute__((interrupt)) _CNInterrupt(void);
 
@@ -32,18 +32,23 @@ int main(void) {
     
     ANSA = 0x0000; // AD1PCFG = 0xffff;
     TRISA = 0x000f;
-    TRISB = 0xffd8;
+//    TRISB = 0xffd8;
+    TRISB = 0xfe48;
     LATB = 0xffff;
     
     /* Enable internal pullups
      * RA0 - CN2 (CNPU1)
      */
-    CNPU1 = CNPU1 | 0x0004;
+//    CNPU1 = CNPU1 | 0x0004;
+    CNPU1 = CNPU1 | 0x000c;
+    CNPU2 = CNPU2 | 0x6000;
     
     /* Enable interrupts and clear IRQ flag
      * RA0 - CN2 (CNEN1)
      */
-    CNEN1 = CNEN1 | 0x0004;
+//    CNEN1 = CNEN1 | 0x0004;
+    CNEN1 = CNEN1 | 0x000c;
+    CNEN2 = CNEN2 | 0x6000;
     IEC1bits.CNIE = 1;
     IFS1bits.CNIF = 0;
     
@@ -71,9 +76,9 @@ int main(void) {
 void __attribute__((interrupt)) _CNInterrupt(void) {
     int deb_ctr = 0;    // debounce counter
     
-    if (!PORTAbits.RA0) {
+    if (!PORTAbits.RA3) {
         /* Software debounce */
-        while ((!PORTAbits.RA0) && (deb_ctr < DEB_MAX)) {
+        while ((!PORTAbits.RA3) && (deb_ctr < DEB_MAX)) {
             deb_ctr++;
         }
         if (deb_ctr == DEB_MAX)
@@ -87,7 +92,7 @@ void __attribute__((interrupt)) _CNInterrupt(void) {
 }
     
 void led1_toggle(void) {
-    LATBbits.LATB5 = ~LATBbits.LATB5;
+    LATBbits.LATB8 = ~LATBbits.LATB8;
 }
 
 void led2_toggle(void) {
